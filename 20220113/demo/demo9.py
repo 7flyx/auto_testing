@@ -34,7 +34,7 @@ class TestBaidu(unittest.TestCase):
     def tearDown(self) -> None:
         self.driver.quit()
 
-    @unittest.skip("kipping") # 忽略当前函数
+    @unittest.skip("kipping")
     @data(u"彭于晏", u"胡歌", u"张一山", u"刘翔")
     def test_baidu1(self, value): # 此处的value参数，就是上一行data的数据
         driver = self.driver
@@ -43,7 +43,7 @@ class TestBaidu(unittest.TestCase):
         driver.find_element_by_id("su").click()
         time.sleep(2)
 
-    @unittest.skip("skipping")
+    @unittest.skip("kipping")
     @data([u"彭于晏", u"彭于晏_百度搜索"], [u"胡歌", u"胡歌_百度搜索"],[u"理想", u"刘翔_百度搜索"])
     @unpack # 对上诉数据进行打包，用于下面代码测试
     def test_baidu2(self, first_value, second_value):
@@ -53,22 +53,23 @@ class TestBaidu(unittest.TestCase):
         driver.find_element_by_id("su").click()
         time.sleep(3)
         title = driver.title
-        self.assertEqual(second_value, title, msg="与描述不符合")
-        # try:
-        #     self.assertEqual(second_value, title, msg="与描述不符合")
-        # except:
-        #     self.get_screen(driver, first_value)
+        # self.assertEqual(second_value, title, msg="与描述不符合")
+        try:
+            self.assertEqual(second_value, title, msg="与描述不符合")
+        except:
+            self.get_screen(driver, first_value)
 
-    @data(*getTxt('data.txt'))
+    # @data(*getTxt('data.txt'))
+    @file_data(r'E:\\Python\\auto_testing\\20220113\\demo\\data.json')
     @unpack
-    def test_baidu3(self, first_value, second_value):
+    def test_baidu3(self, first_value):
         driver = self.driver
         driver.get(self.url)
         driver.find_element_by_id("kw").send_keys(first_value)
         driver.find_element_by_id("su").click()
         time.sleep(3)
         title = driver.title
-        self.assertEqual(second_value, title, msg="与描述不符合")
+        self.assertEqual("  ", title, msg="与描述不符合")
 
     def get_screen(self, driver, file_name):
         if not os.path.exists("../htmlResult"):
