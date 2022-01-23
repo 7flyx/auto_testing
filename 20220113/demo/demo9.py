@@ -12,9 +12,10 @@ def getTxt(file_name):
     res = [] # 开辟一块空间
     path = sys.path[0]
     print(path)
-    with open(path + "/resource/" + file_name, 'r', encoding='utf-8') as fp:
+    with open(path + "2/resource/" + file_name, 'r', encoding='utf-8') as fp:
         lines = fp.readlines() # 读取全部内容，返回的一个list。每一行，就是一个元素
         i = 0
+        print(lines[1])
         for row in lines:
             if i != 0:
                 length = len(row)
@@ -59,17 +60,17 @@ class TestBaidu(unittest.TestCase):
         except:
             self.get_screen(driver, first_value)
 
-    # @data(*getTxt('data.txt'))
-    @file_data(r'E:\\Python\\auto_testing\\20220113\\demo\\data.json')
+    @data(*getTxt('data.csv'))
+    # @file_data(r'E:\\Python\\auto_testing\\20220113\\demo\\data.json')
     @unpack
-    def test_baidu3(self, first_value):
+    def test_baidu3(self, first_value, second_value):
         driver = self.driver
         driver.get(self.url)
         driver.find_element_by_id("kw").send_keys(first_value)
         driver.find_element_by_id("su").click()
         time.sleep(3)
         title = driver.title
-        self.assertEqual("  ", title, msg="与描述不符合")
+        self.assertEqual(second_value, title, msg="与描述不符合")
 
     def get_screen(self, driver, file_name):
         if not os.path.exists("../htmlResult"):
