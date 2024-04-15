@@ -2,7 +2,7 @@
 from selenium import webdriver
 import time
 
-driver = webdriver.Edge()
+driver = webdriver.Chrome()
 driver.get("https://www.baidu.com/")
 
 # clear

@@ -1,5 +1,6 @@
 # unittest框架
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import unittest
 import time
 import os
@@ -8,7 +9,7 @@ import os
 # 有测试固件，setUp() 做准备工作。tearDown（） 做收尾工作
 class Test8(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Edge()
+        self.driver = webdriver.Chrome(executable_path="C:/Users/Administrator/AppData/Local/Programs/Python/Python310/Scripts/chromedriver.exe")
         self.url = "https://www.baidu.com/"
         self.driver.maximize_window()
 
@@ -20,8 +21,9 @@ class Test8(unittest.TestCase):
         dr = self.driver
         url = self.url
         dr.get(url)
-        dr.find_element_by_id("kw").send_keys("许嵩")
-        dr.find_element_by_id("su").click()
+        # dr.find_element(By.ID, "kw").send_keys("许嵩")
+        dr.find_element(By.CSS_SELECTOR, "#kw").send_keys("许嵩")
+        dr.find_element(By.ID, "su").click()
         time.sleep(3)
 
     # @unittest.skip("skipping") # 忽略这个测试用例，也就是不执行这个函数
